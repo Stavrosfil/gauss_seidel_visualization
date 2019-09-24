@@ -40,26 +40,30 @@ gauss(A, b, x, n)
 solution = solve(A, b)
 print('Solution: ', solution)
 
+
+# This is where the plotting magic happens.
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
-# ax.plot([x[0], vec_x[0]],
-#         [x[1], vec_y[0]],
-#         zs=[x[2], vec_z[0]],
-#         linewidth = 1.5)
+ax.set_xlabel('X', fontsize='large', fontweight='bold', labelpad=12)
+ax.set_ylabel('Y', fontsize='large', fontweight='bold', labelpad=12)
+ax.set_zlabel('Z', fontsize='large', fontweight='bold', labelpad=12)
 
 for i in range(n):
 
+    # Take a step in the x axis
     ax.plot([vec_x[i], vec_x[i + 1]],
             [vec_y[i], vec_y[i]],
             zs=[vec_z[i], vec_z[i]],
             linewidth = 1 / (i + 1))
             
+    # Take a step in the y axis
     ax.plot([vec_x[i + 1], vec_x[i + 1]],
             [vec_y[i], vec_y[i + 1]],
             zs=[vec_z[i], vec_z[i]],
             linewidth = 1 / (i + 1))
 
+    # Take a step in the z axis
     ax.plot([vec_x[i + 1], vec_x[i + 1]],
             [vec_y[i + 1], vec_y[i + 1]],
             zs=[vec_z[i], vec_z[i + 1]],
