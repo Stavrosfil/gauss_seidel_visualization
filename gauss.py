@@ -28,7 +28,11 @@ A = np.array([[4.0, -2.0, 1.0],
               [-1.0, 2.0, 6.0]])
 
 b = [1.0, 2.0, 3.0]
-x = [10, 10, 10]
+x = [0, 0, 0]
+
+vec_x.insert(x[0], 0)
+vec_y.insert(x[1], 0)
+vec_z.insert(x[2], 0)
 
 n = 5
 
@@ -39,18 +43,29 @@ print('Solution: ', solution)
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
-ax.plot([x[0], vec_x[0]],
-        [x[1], vec_y[0]],
-        zs=[x[2], vec_z[0]],
-        linewidth = 1.5)
+# ax.plot([x[0], vec_x[0]],
+#         [x[1], vec_y[0]],
+#         zs=[x[2], vec_z[0]],
+#         linewidth = 1.5)
 
-for i in range(n - 1):
+for i in range(n):
+
     ax.plot([vec_x[i], vec_x[i + 1]],
+            [vec_y[i], vec_y[i]],
+            zs=[vec_z[i], vec_z[i]],
+            linewidth = 1 / (i + 1))
+            
+    ax.plot([vec_x[i + 1], vec_x[i + 1]],
             [vec_y[i], vec_y[i + 1]],
+            zs=[vec_z[i], vec_z[i]],
+            linewidth = 1 / (i + 1))
+
+    ax.plot([vec_x[i + 1], vec_x[i + 1]],
+            [vec_y[i + 1], vec_y[i + 1]],
             zs=[vec_z[i], vec_z[i + 1]],
             linewidth = 1 / (i + 1))
 
 ax.scatter(x[0], x[1], x[2], c='r', marker='o')
-ax.scatter(solution[0], solution[1], solution[2], c='g', marker='o')
+# ax.scatter(solution[0], solution[1], solution[2], c='g', marker='o')
 
 fig.savefig('plot.svg')
