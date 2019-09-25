@@ -40,7 +40,6 @@ gauss(A, b, x, n)
 solution = solve(A, b)
 print('Solution: ', solution)
 
-
 # This is where the plotting magic happens.
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
@@ -49,27 +48,53 @@ ax.set_xlabel('X', fontsize='large', fontweight='bold', labelpad=12)
 ax.set_ylabel('Y', fontsize='large', fontweight='bold', labelpad=12)
 ax.set_zlabel('Z', fontsize='large', fontweight='bold', labelpad=12)
 
+# a plane is a*x+b*y+c*z+d=0
+# [a,b,c] is the normal.
+normal = A[0]
+d = -1
+
+# create x,y
+plane_space_x = np.arange(min(vec_x) - 0.2, max(vec_x) + 0.2, .1)
+plane_space_y = np.arange(min(vec_y) - 0.2, max(vec_y) + 0.2, .1)
+xx, yy = np.meshgrid(plane_space_x, plane_space_y)
+
+# calculate corresponding z
+z = (-normal[0] * xx - normal[1] * yy - d) * 1. / normal[2]
+
+# plot the surface
+ax.plot_surface(xx, yy, z, alpha=0.5)
+
 for i in range(n):
 
     # Take a step in the x axis
     ax.plot([vec_x[i], vec_x[i + 1]],
             [vec_y[i], vec_y[i]],
             zs=[vec_z[i], vec_z[i]],
-            linewidth = 1 / (i + 1))
-            
+            linewidth = 3 / (i + 1))
+
     # Take a step in the y axis
     ax.plot([vec_x[i + 1], vec_x[i + 1]],
             [vec_y[i], vec_y[i + 1]],
             zs=[vec_z[i], vec_z[i]],
-            linewidth = 1 / (i + 1))
+            linewidth = 3 / (i + 1))
 
     # Take a step in the z axis
     ax.plot([vec_x[i + 1], vec_x[i + 1]],
             [vec_y[i + 1], vec_y[i + 1]],
             zs=[vec_z[i], vec_z[i + 1]],
-            linewidth = 1 / (i + 1))
+            linewidth = 3 / (i + 1))
 
 ax.scatter(x[0], x[1], x[2], c='r', marker='o')
 # ax.scatter(solution[0], solution[1], solution[2], c='g', marker='o')
 
+
+# rotate the axes and update
+# for angle in range(0, 360):
+#     ax.view_init(30, angle)
+#     plt.draw()
+#     plt.pause(.001)
+
+plt.show()
 fig.savefig('plot.svg')
+
+#%%
