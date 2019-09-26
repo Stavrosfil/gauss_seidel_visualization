@@ -79,16 +79,23 @@ ax.scatter(solution[0], solution[1], solution[2], c='green', marker='o')
 normal = A[0]
 d = -1
 
-# create x,y
-plane_space_x = np.arange(min(vec_x) - 0.2, max(vec_x) + 0.2, .1)
-plane_space_y = np.arange(min(vec_y) - 0.2, max(vec_y) + 0.2, .1)
-xx, yy = np.meshgrid(plane_space_x, plane_space_y)
+def draw_plane(vec_x, vec_y, normal, d):
 
-# calculate corresponding z
-z = (-normal[0] * xx - normal[1] * yy - d) * 1. / normal[2]
+    # create x,y
+    plane_space_x = np.arange(min(vec_x) - 0.2, max(vec_x) + 0.2, .1)
+    plane_space_y = np.arange(min(vec_y) - 0.2, max(vec_y) + 0.2, .1)
+    xx, yy = np.meshgrid(plane_space_x, plane_space_y)
 
-# plot the surface
-ax.plot_surface(xx, yy, z, alpha=0.2, color='grey')
+    # calculate corresponding z
+    z = (-normal[0] * xx - normal[1] * yy - d) * 1. / normal[2]
+    # z2 = (-A[1][0] * xx - A[1][1] * yy - d) * 1. / A[1][2]
+
+    # plot the surface
+    ax.plot_surface(xx, yy, z, alpha=0.2, color='grey')
+    # ax.plot_surface(xx, yy, z2, alpha=0.2, color='blue')
+
+for i in range(3):
+    draw_plane(vec_x, vec_y, A[i], b[i] * -1)
 
 # rotate the axes and update
 # for angle in range(0, 360):
